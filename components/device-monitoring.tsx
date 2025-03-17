@@ -1,13 +1,31 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { MoreHorizontal, Search, RefreshCw } from "lucide-react"
+import { useState } from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { MoreHorizontal, Search, RefreshCw } from "lucide-react";
 
 // Sample data - would be replaced with real API data
 const devices = [
@@ -66,40 +84,42 @@ const devices = [
     uptime: "0d 0h 0m",
     lastSeen: "2h 15m ago",
   },
-]
+];
 
 interface DeviceMonitoringProps {
-  onDeviceSelect?: (deviceId: string) => void
+  onDeviceSelect?: (deviceId: string) => void;
 }
 
-export default function DeviceMonitoring({ onDeviceSelect }: DeviceMonitoringProps) {
-  const [searchQuery, setSearchQuery] = useState("")
-  const [isRefreshing, setIsRefreshing] = useState(false)
+export default function DeviceMonitoring({
+  onDeviceSelect,
+}: DeviceMonitoringProps) {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   const filteredDevices = devices.filter(
     (device) =>
       device.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      device.id.toLowerCase().includes(searchQuery.toLowerCase()),
-  )
+      device.id.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const handleRefresh = () => {
-    setIsRefreshing(true)
+    setIsRefreshing(true);
     // Simulate API refresh
-    setTimeout(() => setIsRefreshing(false), 1000)
-  }
+    setTimeout(() => setIsRefreshing(false), 1000);
+  };
 
   const getStatusColor = (status: string) => {
     switch (status) {
       case "active":
-        return "bg-green-500"
+        return "bg-green-500";
       case "warning":
-        return "bg-yellow-500"
+        return "bg-yellow-500";
       case "offline":
-        return "bg-red-500"
+        return "bg-red-500";
       default:
-        return "bg-gray-500"
+        return "bg-gray-500";
     }
-  }
+  };
 
   return (
     <Card>
@@ -107,7 +127,9 @@ export default function DeviceMonitoring({ onDeviceSelect }: DeviceMonitoringPro
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <CardTitle>Device Monitoring</CardTitle>
-            <CardDescription>Status and performance of connected mining devices</CardDescription>
+            <CardDescription>
+              Status and performance of connected mining devices
+            </CardDescription>
           </div>
           <div className="flex items-center gap-2">
             <div className="relative">
@@ -120,8 +142,15 @@ export default function DeviceMonitoring({ onDeviceSelect }: DeviceMonitoringPro
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
-            <Button size="icon" variant="outline" onClick={handleRefresh} disabled={isRefreshing}>
-              <RefreshCw className={`h-4 w-4 ${isRefreshing ? "animate-spin" : ""}`} />
+            <Button
+              size="icon"
+              variant="outline"
+              onClick={handleRefresh}
+              disabled={isRefreshing}
+            >
+              <RefreshCw
+                className={`h-4 w-4 ${isRefreshing ? "animate-spin" : ""}`}
+              />
               <span className="sr-only">Refresh</span>
             </Button>
           </div>
@@ -147,17 +176,27 @@ export default function DeviceMonitoring({ onDeviceSelect }: DeviceMonitoringPro
               {filteredDevices.map((device) => (
                 <TableRow
                   key={device.id}
-                  className={onDeviceSelect ? "cursor-pointer hover:bg-muted/50" : ""}
+                  className={
+                    onDeviceSelect ? "cursor-pointer hover:bg-muted/50" : ""
+                  }
                   onClick={() => onDeviceSelect && onDeviceSelect(device.id)}
                 >
                   <TableCell>
                     <div className="flex items-center gap-2">
-                      <span className={`relative flex h-3 w-3 ${device.status !== "offline" ? "animate-pulse" : ""}`}>
+                      <span
+                        className={`relative flex h-3 w-3 ${
+                          device.status !== "offline" ? "animate-pulse" : ""
+                        }`}
+                      >
                         <span
-                          className={`absolute inline-flex h-full w-full rounded-full ${getStatusColor(device.status)} opacity-75`}
+                          className={`absolute inline-flex h-full w-full rounded-full ${getStatusColor(
+                            device.status
+                          )} opacity-75`}
                         ></span>
                         <span
-                          className={`relative inline-flex rounded-full h-3 w-3 ${getStatusColor(device.status)}`}
+                          className={`relative inline-flex rounded-full h-3 w-3 ${getStatusColor(
+                            device.status
+                          )}`}
                         ></span>
                       </span>
                       <Badge
@@ -165,25 +204,38 @@ export default function DeviceMonitoring({ onDeviceSelect }: DeviceMonitoringPro
                           device.status === "active"
                             ? "default"
                             : device.status === "warning"
-                              ? "secondary"
-                              : "destructive"
+                            ? "secondary"
+                            : "destructive"
                         }
                       >
-                        {device.status.charAt(0).toUpperCase() + device.status.slice(1)}
+                        {device.status.charAt(0).toUpperCase() +
+                          device.status.slice(1)}
                       </Badge>
                     </div>
                   </TableCell>
                   <TableCell className="font-medium">{device.name}</TableCell>
-                  <TableCell className="text-right">{device.hashRate} TH/s</TableCell>
+                  <TableCell className="text-right">
+                    {device.hashRate} TH/s
+                  </TableCell>
                   <TableCell className="text-right">{device.power} W</TableCell>
-                  <TableCell className="text-right">{device.efficiency} J/TH</TableCell>
-                  <TableCell className="text-right">{device.temperature}°C</TableCell>
+                  <TableCell className="text-right">
+                    {device.efficiency} J/TH
+                  </TableCell>
+                  <TableCell className="text-right">
+                    {device.temperature}°C
+                  </TableCell>
                   <TableCell className="text-right">{device.uptime}</TableCell>
-                  <TableCell className="text-right">{device.lastSeen}</TableCell>
+                  <TableCell className="text-right">
+                    {device.lastSeen}
+                  </TableCell>
                   <TableCell>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon" onClick={(e) => e.stopPropagation()}>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={(e) => e.stopPropagation()}
+                        >
                           <MoreHorizontal className="h-4 w-4" />
                           <span className="sr-only">Open menu</span>
                         </Button>
@@ -191,14 +243,20 @@ export default function DeviceMonitoring({ onDeviceSelect }: DeviceMonitoringPro
                       <DropdownMenuContent align="end">
                         <DropdownMenuItem
                           onClick={(e) => {
-                            e.stopPropagation()
-                            onDeviceSelect && onDeviceSelect(device.id)
+                            e.stopPropagation();
+                            if (onDeviceSelect) {
+                              onDeviceSelect(device.id);
+                            }
                           }}
                         >
                           View Details
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={(e) => e.stopPropagation()}>Restart Device</DropdownMenuItem>
-                        <DropdownMenuItem onClick={(e) => e.stopPropagation()}>Edit Settings</DropdownMenuItem>
+                        <DropdownMenuItem onClick={(e) => e.stopPropagation()}>
+                          Restart Device
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={(e) => e.stopPropagation()}>
+                          Edit Settings
+                        </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </TableCell>
@@ -209,6 +267,5 @@ export default function DeviceMonitoring({ onDeviceSelect }: DeviceMonitoringPro
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }
-

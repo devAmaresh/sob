@@ -1,15 +1,29 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { Search, RefreshCw, AlertTriangle, ThermometerIcon, Zap, Clock, Activity } from "lucide-react"
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts"
+import { useState } from "react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-import Layout from "@/components/layout"
-import DeviceMonitoring from "@/components/device-monitoring"
+import { Button } from "@/components/ui/button";
+import {
+  AlertTriangle,
+  ThermometerIcon,
+  Zap,
+  Clock,
+  Activity,
+} from "lucide-react";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
+
+import Layout from "@/components/layout";
+import DeviceMonitoring from "@/components/device-monitoring";
 
 // Sample data for device details
 const deviceDetails = {
@@ -28,11 +42,26 @@ const deviceDetails = {
   worker: "worker1",
   location: "Mining Farm A - Rack 3",
   alerts: [
-    { id: 1, type: "warning", message: "Temperature spike detected", timestamp: "2023-05-15 14:32:45" },
-    { id: 2, type: "info", message: "Hashrate fluctuation", timestamp: "2023-05-14 09:17:22" },
-    { id: 3, type: "error", message: "Connection lost", timestamp: "2023-05-10 22:05:11" },
+    {
+      id: 1,
+      type: "warning",
+      message: "Temperature spike detected",
+      timestamp: "2023-05-15 14:32:45",
+    },
+    {
+      id: 2,
+      type: "info",
+      message: "Hashrate fluctuation",
+      timestamp: "2023-05-14 09:17:22",
+    },
+    {
+      id: 3,
+      type: "error",
+      message: "Connection lost",
+      timestamp: "2023-05-10 22:05:11",
+    },
   ],
-}
+};
 
 // Sample historical data
 const hashRateHistory = [
@@ -43,7 +72,7 @@ const hashRateHistory = [
   { time: "Day 5", value: 111 },
   { time: "Day 6", value: 110 },
   { time: "Day 7", value: 113 },
-]
+];
 
 const temperatureHistory = [
   { time: "Day 1", value: 62 },
@@ -53,7 +82,7 @@ const temperatureHistory = [
   { time: "Day 5", value: 66 },
   { time: "Day 6", value: 65 },
   { time: "Day 7", value: 68 },
-]
+];
 
 const powerHistory = [
   { time: "Day 1", value: 3200 },
@@ -63,18 +92,17 @@ const powerHistory = [
   { time: "Day 5", value: 3260 },
   { time: "Day 6", value: 3250 },
   { time: "Day 7", value: 3270 },
-]
+];
 
 export default function DevicesPage() {
-  const [searchQuery, setSearchQuery] = useState("")
-  const [isRefreshing, setIsRefreshing] = useState(false)
-  const [selectedDevice, setSelectedDevice] = useState<string | null>(null)
+  // const [isRefreshing, setIsRefreshing] = useState(false);
+  const [selectedDevice, setSelectedDevice] = useState<string | null>(null);
 
-  const handleRefresh = () => {
-    setIsRefreshing(true)
-    // Simulate API refresh
-    setTimeout(() => setIsRefreshing(false), 1000)
-  }
+  // const handleRefresh = () => {
+  //   setIsRefreshing(true);
+  //   // Simulate API refresh
+  //   setTimeout(() => setIsRefreshing(false), 1000);
+  // };
 
   return (
     <Layout>
@@ -86,7 +114,9 @@ export default function DevicesPage() {
         {selectedDevice ? (
           <div className="grid gap-6">
             <div className="flex justify-between items-center">
-              <h2 className="text-xl font-bold">Device Details: {deviceDetails.name}</h2>
+              <h2 className="text-xl font-bold">
+                Device Details: {deviceDetails.name}
+              </h2>
               <Button variant="outline" onClick={() => setSelectedDevice(null)}>
                 Back to All Devices
               </Button>
@@ -95,24 +125,32 @@ export default function DevicesPage() {
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
               <Card>
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-sm font-medium">Hash Rate</CardTitle>
+                  <CardTitle className="text-sm font-medium">
+                    Hash Rate
+                  </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="flex items-center">
                     <Activity className="mr-2 h-4 w-4 text-primary" />
-                    <div className="text-2xl font-bold">{deviceDetails.hashRate} TH/s</div>
+                    <div className="text-2xl font-bold">
+                      {deviceDetails.hashRate} TH/s
+                    </div>
                   </div>
                 </CardContent>
               </Card>
 
               <Card>
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-sm font-medium">Temperature</CardTitle>
+                  <CardTitle className="text-sm font-medium">
+                    Temperature
+                  </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="flex items-center">
                     <ThermometerIcon className="mr-2 h-4 w-4 text-orange-500" />
-                    <div className="text-2xl font-bold">{deviceDetails.temperature}°C</div>
+                    <div className="text-2xl font-bold">
+                      {deviceDetails.temperature}°C
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -124,7 +162,9 @@ export default function DevicesPage() {
                 <CardContent>
                   <div className="flex items-center">
                     <Zap className="mr-2 h-4 w-4 text-yellow-500" />
-                    <div className="text-2xl font-bold">{deviceDetails.power} W</div>
+                    <div className="text-2xl font-bold">
+                      {deviceDetails.power} W
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -136,7 +176,9 @@ export default function DevicesPage() {
                 <CardContent>
                   <div className="flex items-center">
                     <Clock className="mr-2 h-4 w-4 text-blue-500" />
-                    <div className="text-2xl font-bold">{deviceDetails.uptime}</div>
+                    <div className="text-2xl font-bold">
+                      {deviceDetails.uptime}
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -150,28 +192,42 @@ export default function DevicesPage() {
                 <CardContent>
                   <dl className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div>
-                      <dt className="text-sm font-medium text-muted-foreground">Serial Number</dt>
+                      <dt className="text-sm font-medium text-muted-foreground">
+                        Serial Number
+                      </dt>
                       <dd className="text-sm">{deviceDetails.serialNumber}</dd>
                     </div>
                     <div>
-                      <dt className="text-sm font-medium text-muted-foreground">Firmware</dt>
+                      <dt className="text-sm font-medium text-muted-foreground">
+                        Firmware
+                      </dt>
                       <dd className="text-sm">{deviceDetails.firmware}</dd>
                     </div>
                     <div>
-                      <dt className="text-sm font-medium text-muted-foreground">Pool</dt>
+                      <dt className="text-sm font-medium text-muted-foreground">
+                        Pool
+                      </dt>
                       <dd className="text-sm">{deviceDetails.pool}</dd>
                     </div>
                     <div>
-                      <dt className="text-sm font-medium text-muted-foreground">Worker</dt>
+                      <dt className="text-sm font-medium text-muted-foreground">
+                        Worker
+                      </dt>
                       <dd className="text-sm">{deviceDetails.worker}</dd>
                     </div>
                     <div>
-                      <dt className="text-sm font-medium text-muted-foreground">Location</dt>
+                      <dt className="text-sm font-medium text-muted-foreground">
+                        Location
+                      </dt>
                       <dd className="text-sm">{deviceDetails.location}</dd>
                     </div>
                     <div>
-                      <dt className="text-sm font-medium text-muted-foreground">Efficiency</dt>
-                      <dd className="text-sm">{deviceDetails.efficiency} J/TH</dd>
+                      <dt className="text-sm font-medium text-muted-foreground">
+                        Efficiency
+                      </dt>
+                      <dd className="text-sm">
+                        {deviceDetails.efficiency} J/TH
+                      </dd>
                     </div>
                   </dl>
                 </CardContent>
@@ -184,19 +240,24 @@ export default function DevicesPage() {
                 <CardContent>
                   <div className="space-y-4">
                     {deviceDetails.alerts.map((alert) => (
-                      <div key={alert.id} className="flex items-start gap-2 rounded-lg border p-3">
+                      <div
+                        key={alert.id}
+                        className="flex items-start gap-2 rounded-lg border p-3"
+                      >
                         <AlertTriangle
                           className={`h-5 w-5 ${
                             alert.type === "error"
                               ? "text-red-500"
                               : alert.type === "warning"
-                                ? "text-yellow-500"
-                                : "text-blue-500"
+                              ? "text-yellow-500"
+                              : "text-blue-500"
                           }`}
                         />
                         <div>
                           <p className="font-medium">{alert.message}</p>
-                          <p className="text-xs text-muted-foreground">{alert.timestamp}</p>
+                          <p className="text-xs text-muted-foreground">
+                            {alert.timestamp}
+                          </p>
                         </div>
                       </div>
                     ))}
@@ -220,11 +281,17 @@ export default function DevicesPage() {
                     <TabsContent value="hashrate" className="h-full mt-0">
                       <ResponsiveContainer width="100%" height="100%">
                         <LineChart data={hashRateHistory}>
-                          <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                          <CartesianGrid
+                            strokeDasharray="3 3"
+                            className="stroke-muted"
+                          />
                           <XAxis dataKey="time" className="text-xs" />
                           <YAxis className="text-xs" />
                           <Tooltip
-                            formatter={(value) => [`${value} TH/s`, "Hash Rate"]}
+                            formatter={(value) => [
+                              `${value} TH/s`,
+                              "Hash Rate",
+                            ]}
                             contentStyle={{
                               backgroundColor: "rgba(255,255,255,0.9)",
                               borderColor: "var(--border)",
@@ -245,7 +312,10 @@ export default function DevicesPage() {
                     <TabsContent value="temperature" className="h-full mt-0">
                       <ResponsiveContainer width="100%" height="100%">
                         <LineChart data={temperatureHistory}>
-                          <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                          <CartesianGrid
+                            strokeDasharray="3 3"
+                            className="stroke-muted"
+                          />
                           <XAxis dataKey="time" className="text-xs" />
                           <YAxis className="text-xs" />
                           <Tooltip
@@ -270,7 +340,10 @@ export default function DevicesPage() {
                     <TabsContent value="power" className="h-full mt-0">
                       <ResponsiveContainer width="100%" height="100%">
                         <LineChart data={powerHistory}>
-                          <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                          <CartesianGrid
+                            strokeDasharray="3 3"
+                            className="stroke-muted"
+                          />
                           <XAxis dataKey="time" className="text-xs" />
                           <YAxis className="text-xs" />
                           <Tooltip
@@ -302,6 +375,5 @@ export default function DevicesPage() {
         )}
       </div>
     </Layout>
-  )
+  );
 }
-

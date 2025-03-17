@@ -2,7 +2,6 @@
 
 import type React from "react";
 
-import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { MoonIcon, SunIcon } from "lucide-react";
@@ -30,7 +29,6 @@ import {
   HelpCircle,
 } from "lucide-react";
 import Image from "next/image";
-import { cn } from "@/lib/utils";
 
 interface LayoutProps {
   children: React.ReactNode;

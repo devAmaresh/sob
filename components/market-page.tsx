@@ -130,7 +130,7 @@ export default function MarketPage() {
                     <XAxis dataKey="date" className="text-xs" />
                     <YAxis className="text-xs" />
                     <Tooltip
-                      formatter={(value) => [`${value.toFixed(5)} BTC`, "BTC/TH/Day"]}
+                      formatter={(value) => [`${Number(value).toFixed(5)} BTC`, "BTC/TH/Day"]}
                       contentStyle={{
                         backgroundColor: "rgba(255,255,255,0.9)",
                         borderColor: "var(--border)",
