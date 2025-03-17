@@ -73,14 +73,14 @@ export default function Layout({ children }: LayoutProps) {
             <SidebarMenu>
               {menuItems.map((item) => (
                 <SidebarMenuItem key={item.label}>
-                  <SidebarMenuButton asChild isActive={pathname === item.href}
-                  
-                  >
-                    <Link href={item.href}>
+                  <Link href={item.href}>
+                  <SidebarMenuButton asChild isActive={pathname === item.href}>
+                      <div>
                       <item.icon className="h-5 w-5" />
                       <span className="">{item.label}</span>
-                    </Link>
+                      </div>
                   </SidebarMenuButton>
+                  </Link>
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>
